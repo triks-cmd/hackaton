@@ -1,16 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Результаты</title>
+    <title>Архив отчетов</title>
+    <style>
+        .report { 
+            border: 1px solid #ddd; 
+            padding: 15px; 
+            margin-bottom: 20px; 
+            background: #f9f9f9;
+        }
+        .report-date { 
+            color: #666; 
+            font-size: 0.9em; 
+            margin-bottom: 10px;
+        }
+        pre { 
+            white-space: pre-wrap; 
+            font-family: Arial, sans-serif; 
+            line-height: 1.5;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        {% if email_sent %}
-            <p style="color: green">✅ Данные успешно отправлены в Telegram!</p>
-        {% else %}
-            <p style="color: red">❌ Ошибка отправки в Telegram</p>
-        {% endif %}
-        <a href="/">Назад</a>
-    </div>
+    <h1>Архив отчетов</h1>
+    
+    {% if success %}
+        <p style="color:green">✅ Новый отчет успешно добавлен!</p>
+    {% endif %}
+    
+    {% if not reports %}
+        <p>Нет сохраненных отчетов</p>
+    {% else %}
+        {% for report in reports %}
+            <div class="report">
+                <div class="report-date">
+                    Отчет от {{ report.filename.split('_')[1][:8] }} ({{ report.filename.split('_')[1][8:10] }}:{{ report.filename.split('_')[1][10:12] }})
+                </div>
+                <pre>{{ report.content }}</pre>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <p><a href="/">Вернуться к форме</a></p>
 </body>
 </html>

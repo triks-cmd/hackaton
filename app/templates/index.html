@@ -1,72 +1,81 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Анализ успеваемости</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Создать отчет</title>
+    <style>
+        .form-group { margin-bottom: 15px; }
+        label { display: inline-block; width: 200px; }
+        input, select { padding: 5px; width: 250px; }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Введите данные студента</h1>
+    <h1>Форма отчета</h1>
+    
+    {% if error %}
+        <p style="color:red">{{ error }}</p>
+    {% endif %}
+    
+    <form method="POST">
+        <fieldset>
+            <legend>Данные студента</legend>
+            
+            <div class="form-group">
+                <label>Имя студента:*</label>
+                <input type="text" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Ожидаемый уровень:</label>
+                <input type="text" name="expected_level">
+            </div>
+            
+            <div class="form-group">
+                <label>Посещаемость (%):</label>
+                <input type="number" name="attendance" min="0" max="100">
+            </div>
+        </fieldset>
         
-        {% if error_message %}
-        <div class="error">{{ error_message }}</div>
-        {% endif %}
-        
-        <form method="POST">
+        <fieldset>
+            <legend>Данные работы</legend>
+            
             <div class="form-group">
-                <label for="name">ФИО студента:</label>
-                <input type="text" id="name" name="name" required>
+                <label>Тема работы:*</label>
+                <input type="text" name="topic" required>
             </div>
             
             <div class="form-group">
-                <label for="expected_level">Ожидаемый уровень (0-100):</label>
-                <input type="number" id="expected_level" name="expected_level" min="0" max="100" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="attendance">Посещаемость (%):</label>
-                <input type="number" id="attendance" name="attendance" min="0" max="100" required>
-            </div>
-            
-            <h2>Добавить работу</h2>
-            
-            <div class="form-group">
-                <label for="topic">Тема работы:</label>
-                <input type="text" id="topic" name="topic" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="difficulty">Сложность:</label>
-                <select id="difficulty" name="difficulty" required>
-                    <option value="низкий">Низкая</option>
-                    <option value="средний">Средняя</option>
-                    <option value="высокий">Высокая</option>
+                <label>Сложность:</label>
+                <select name="difficulty">
+                    <option value="легкая">Легкая</option>
+                    <option value="средняя">Средняя</option>
+                    <option value="сложная">Сложная</option>
                 </select>
             </div>
             
             <div class="form-group">
-                <label for="grade">Оценка (0-100):</label>
-                <input type="number" id="grade" name="grade" min="0" max="100" required>
+                <label>Оценка:</label>
+                <input type="number" name="grade" min="1" max="10">
             </div>
             
             <div class="form-group">
-                <label for="assigned_date">Дата задания:</label>
-                <input type="date" id="assigned_date" name="assigned_date" required>
+                <label>Дата выдачи:</label>
+                <input type="date" name="assigned_date">
             </div>
             
             <div class="form-group">
-                <label for="due_date">Срок сдачи:</label>
-                <input type="date" id="due_date" name="due_date" required>
+                <label>Срок сдачи:</label>
+                <input type="date" name="due_date">
             </div>
             
             <div class="form-group">
-                <label for="submission_date">Дата сдачи:</label>
-                <input type="date" id="submission_date" name="submission_date" required>
+                <label>Дата сдачи:</label>
+                <input type="date" name="submission_date">
             </div>
-            
-            <button type="submit">Сгенерировать отчет</button>
-        </form>
-    </div>
+        </fieldset>
+        
+        <button type="submit">Сохранить отчет</button>
+    </form>
+    
+    <p><a href="/analysis">Просмотреть все отчеты</a></p>
 </body>
 </html>
