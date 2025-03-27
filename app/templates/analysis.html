@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Результаты</title>
+</head>
+<body>
+    <div class="container">
+        {% if email_sent %}
+            <p style="color: green">✅ Данные успешно отправлены в Telegram!</p>
+        {% else %}
+            <p style="color: red">❌ Ошибка отправки в Telegram</p>
+        {% endif %}
+        <a href="/">Назад</a>
+    </div>
+</body>
+</html>
