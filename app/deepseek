@@ -1,0 +1,21 @@
+import requests
+
+DEEPSEEK_API_URL = https://chat.deepseek.com/  
+DEEPSEEK_API_KEY = sk-462732b2fb5d41ea9460f69c60e64793
+
+def get_deepseek_response(prompt):
+    headers = {
+        "Authorization": f"Bearer {DEEPSEEK_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    data = {"prompt": prompt}
+    try:
+        response = requests.post(DEEPSEEK_API_URL, json=data, headers=headers)
+        if response.status_code == 200:
+            result = response.json()
+            # Предполагается, что в ответе есть поле "response"
+            return result.get("response", "Ответ не получен.")
+        else:
+            return f"Ошибка DeepSeek: {response.status_code} {response.text}"
+    except Exception as e:
+        return f"Исключение при обращении к DeepSeek: {e}"
